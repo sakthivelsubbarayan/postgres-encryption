@@ -1,0 +1,25 @@
+{
+  "name": "Postgresencryption",
+  "version": "1.0.0",
+  "description": "Postgres field level encryption",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "sequelize db:migrate && node server.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "sequalize"
+  ],
+  "author": "sakthivelsubbaryan",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "sequelize": "^5.21.11",
+    "sequelize-cli": "^5.5.1",
+    "pg": "^8.2.1"
+  }
+}
