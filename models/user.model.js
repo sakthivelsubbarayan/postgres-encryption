@@ -1,3 +1,5 @@
+const dataChanges = require('./dataChanges');
+
 module.exports = function userModel(Sequelize, types) {
     const user = Sequelize.define('users', {
         id: {
@@ -25,5 +27,14 @@ module.exports = function userModel(Sequelize, types) {
     }, {
         tableName: 'users',
     });
+
+    user.beforeCreate(async (user, options) => {
+        user = await dataChanges.encryptColumns(user, ['data']);
+    });
+
+    user.beforeFind(async (user, options) => {
+        user = await dataChanges.decryptColumns(user, ['data']);
+    });
+
     return user;
 };
