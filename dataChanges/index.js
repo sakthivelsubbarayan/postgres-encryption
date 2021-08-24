@@ -83,3 +83,21 @@ module.exports.decryptColumns = async (findPayload, columnNames) => {
     throw error;
   }
 }
+
+module.exports.getFindQuery = async (findQuey = {}, columns = []) => {
+  console.log("columns.........", columns);
+  const encryptedFindQuery = findQuey;
+  columns.map((column) => {
+    encryptedFindQuery[column] = Sequelize.fn(
+      'PGP_SYM_ENCRYPT',
+      Sequelize.cast(Sequelize.fn(
+        'PGP_SYM_ENCRYPT',
+        findQuey[column],
+        userKey
+      ), 'text'),
+      serverKey
+    )
+  });
+  console.log("encryptedFindQuery...........", encryptedFindQuery);
+  return encryptedFindQuery;
+}

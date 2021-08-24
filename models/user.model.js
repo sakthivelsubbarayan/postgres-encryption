@@ -1,4 +1,4 @@
-const dataChanges = require('./dataChanges');
+const dataChanges = require('../dataChanges');
 
 module.exports = function userModel(Sequelize, types) {
     const user = Sequelize.define('users', {
@@ -9,7 +9,7 @@ module.exports = function userModel(Sequelize, types) {
             autoIncrement: true,
         },
         name: {
-            type: types.STRING,
+            type: types.TEXT,
         },
         data: {
             type: types.TEXT,
@@ -29,11 +29,11 @@ module.exports = function userModel(Sequelize, types) {
     });
 
     user.beforeCreate(async (user, options) => {
-        user = await dataChanges.encryptColumns(user, ['data']);
+        user = await dataChanges.encryptColumns(user, ['data', 'name']);
     });
 
     user.beforeFind(async (user, options) => {
-        user = await dataChanges.decryptColumns(user, ['data']);
+        user = await dataChanges.decryptColumns(user, ['data', 'name']);
     });
 
     return user;

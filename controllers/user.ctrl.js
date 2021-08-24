@@ -1,8 +1,7 @@
 const userModel = require("../models").users;
 const Sequelize = require('sequelize');
+const dataChanges = require('../dataChanges')
 
-const userKey = "Y!LLbyK&CBWfX9Z";
-const serverKey = "qn4jkj8jFXvqNaNPD";
 // Insert data into the User's table
 module.exports.CreateUser = async function (req, res) {
     userModel.create(req.body).then((userCreatedResponse) => {
@@ -15,8 +14,9 @@ module.exports.CreateUser = async function (req, res) {
 // decrypt the user  data
 module.exports.decryptUser = async function (req, res) {
     const userName = req.params.userName;
+    const findQuey = await dataChanges.getFindQuery({ name: userName }, ['name']);
+    console.log("findQuey..........", findQuey);
     userModel.findAll({
-        where: { name: userName },
         attributes: [
             'name',
             'data'

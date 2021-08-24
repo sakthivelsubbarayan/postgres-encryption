@@ -11,7 +11,7 @@ module.exports = {
         autoIncrement: true,
       },
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       data: {
         type: Sequelize.TEXT,
